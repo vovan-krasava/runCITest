@@ -17,23 +17,9 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: build
 
   build-and-test:
       name: func test
-      needs: build
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
@@ -53,11 +39,11 @@ jobs:
             output: 'test-summary.md'
           if: always()
           
-        - name: Upload test summary
+        - name: Upload artifact
           uses: actions/upload-artifact@v3
           with:
             name: test-result.xml
-            path: test-result.xml
+            paths: test-result.xml
           if: always()
           
         - name: Create test summary
@@ -65,6 +51,7 @@ jobs:
           with:
             paths: "**/build/test-results/runTest/**/TEST-*.xml"
           if: always()
+          
   publish-test-results:
     name: "Publish Tests Results"
     needs: build-and-test
