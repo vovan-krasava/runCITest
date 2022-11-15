@@ -80,7 +80,7 @@ tasks.withType(Test) {
 
     setDefaultCharacterEncoding("UTF-8")
 
-    ignoreFailures = true
+    ignoreFailures = false
     minHeapSize = "512m"
     maxHeapSize = "1200m"
 }
