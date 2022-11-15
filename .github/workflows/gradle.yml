@@ -49,13 +49,13 @@ jobs:
         - name: Test Summary
           uses: test-summary/action@v2
           with:
-            paths: 'build/reports/tests/runTest/index.html'
-            output: "test-summary.md"
+            paths: '**/build/reports/tests/runTest/**/TEST-*.xml'
+            output: 'test-summary.md'
           if: always()
         - name: Upload test summary
           uses: actions/upload-artifact@v3
           with:
-            name: test-summary
+            name: test-summary.md
             path: test-summary.md
           if: always()
         - name: Publish Test Report
@@ -63,7 +63,6 @@ jobs:
           if: always() # always run even if the previous step fails
           with:
             report_paths: '**/build/reports/tests/runTest/**/TEST-*.xml'
-            detailed_summary: true
 
 
 
