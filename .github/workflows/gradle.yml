@@ -46,3 +46,16 @@ jobs:
           uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
           with:
             arguments: runTest
+        - name: Test Summary
+          uses: test-summary/action@v2
+          with:
+            paths: "reports/tests/runTest/testng-results.xml"
+          if: always()
+        - name: Upload test summary
+          uses: actions/upload-artifact@v3
+          with:
+            name: test-summary
+            path: test-summary.md
+          if: always()
+
+
