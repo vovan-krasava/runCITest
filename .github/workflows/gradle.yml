@@ -31,7 +31,8 @@ jobs:
       with:
         arguments: build
 
-    tests:
+    func-tests:
+      name: func test
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
