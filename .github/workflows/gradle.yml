@@ -42,8 +42,7 @@ jobs:
             arguments: runTest
         - name: Create test summary
           uses: test-summary/action@dist
-          with: |
-            paths: "build/reports/tests/runTest/**/TEST-*.xml"
+          with:
             output: "test-summary.md"
           if: always()
         - name: Upload test summary
