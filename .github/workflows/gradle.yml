@@ -49,7 +49,7 @@ jobs:
         - name: Test Summary
           uses: test-summary/action@v2
           with:
-            paths: "test/results/**/TEST-*.xml"
+            paths: "build/reports/tests/runTest/**/TEST-*.xml"
           if: always()
         - name: Upload test summary
           uses: actions/upload-artifact@v3
