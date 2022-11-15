@@ -46,8 +46,8 @@ jobs:
           uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
           with:
             arguments: runTest
-        - uses: test-summary/action@v2
         - name: create test summary and md
+          uses: test-summary/action@v2
           with:
             paths: "test/results/**/TEST-*.xml"
             output: "test-summary.md"
