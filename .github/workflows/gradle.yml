@@ -47,10 +47,15 @@ jobs:
           with:
             arguments: runTest
         - name: create test summary and md
-          uses: test-summary/action@v2
+          uses: test-summary/action@dst
           with:
             paths: "test/results/**/TEST-*.xml"
             output: "test-summary.md"
+        - name: Create test summary
+          uses: test-summary/action@dist
+          with:
+            paths: "test/results/**/TEST-*.xml"
+          if: always()
         - name: Upload test summary
           uses: actions/upload-artifact@v3
           with:
