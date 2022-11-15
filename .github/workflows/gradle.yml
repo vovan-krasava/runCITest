@@ -19,7 +19,7 @@ permissions:
 jobs:
 
   build-and-test:
-      name: func test
+      name: Run test
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
@@ -37,7 +37,7 @@ jobs:
         - name: Upload artifact
           uses: actions/upload-artifact@v3
           with:
-            name: artifacts
+            name: result.xml
             path: "build/test-results/runTest/TEST-*.xml"
             if-no-files-found: error
           if: success()
@@ -61,17 +61,25 @@ jobs:
     if: always()
 
     steps:
+      - uses: actions/checkout@v3
+      
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          path: artifacts
+          name: result.xml
+          
+      - name: 'Echo download path'
+        run: echo ${{steps.download.outputs.download-path}}
+          
+      - name: Display structure of downloaded files
+        run: ls -R
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         id: test-results
         if: always()
         with:
-          junit_files: "artifacts/TEST-*.xml"
+          junit_files: "result.xml"
 
       - name: Set badge color
         shell: bash
