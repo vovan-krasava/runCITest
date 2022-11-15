@@ -46,8 +46,8 @@ jobs:
           uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
           with:
             arguments: runTest
-        - name: Test Summary
-          uses: test-summary/action@v2
+        - name: Create test summary
+          uses: test-summary/action@dist
           with:
             paths: "build/reports/tests/runTest/**/TEST-*.xml"
           if: always()
