@@ -71,7 +71,7 @@ jobs:
         id: test-results
         if: always()
         with:
-          junit_files: "artifacts/build/test-results/runTest/TEST-*.xml"
+          junit_files: "artifacts/TEST-*.xml"
 
       - name: Set badge color
         shell: bash
