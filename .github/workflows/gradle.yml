@@ -63,25 +63,30 @@ jobs:
           with:
             paths: '**/build/reports/tests/runTest/**/TEST-*.xml'
           if: always()
-  test:
+  test-alternate-results-path:
     needs: run-test
     runs-on: ubuntu-18.04
-    name: Generate Test Reports
+    name: Report is generated in alternate xml results path.
     env:
-      RESULTS_PATH: 'build/reports/tests/runTest/index.html'
+      RESULTS_PATH: "build/reports/tests/runTest"
     steps:
+      - uses: actions/checkout@v1
       - name: Generate Report
         id: xunit-viewer
-        uses: AutoModality/action-xunit-viewer@v1
+        uses: ./  #use the current project relative to root
         with:
           results: ${{ env.RESULTS_PATH }}
       - name: The generated report
         run: echo "The report is ${{ steps.xunit-viewer.outputs.report-file }}"    
+      - name: Test
+        run: |
+            [ ${{ steps.xunit-viewer.outputs.report-file }} == "${{ env.RESULTS_PATH }}/index.html" ]
       - name: Attach the report
+        if: always()
         uses: actions/upload-artifact@v1
         with:
           name: alternate-results-path-reports
-          path: ${{ env.RESULTS_PATH }}
+          path: ${{ steps.xunit-viewer.outputs.report-dir }}
 
 
 
