@@ -45,7 +45,7 @@ jobs:
             name: test-result.xml
             path: ${{ github.workspace }}
             if-no-files-found: error
-          if: passed()
+          if: success()
           
         - name: Create test summary
           uses: test-summary/action@dist
