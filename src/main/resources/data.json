@@ -1,0 +1,32 @@
+[
+  {
+    "name":"John",
+    "city":"Berlin",
+    "age": 5,
+    "cars":[
+      "audi",
+      "bmw"
+    ],
+    "job":"Teacher",
+    "other": [{"cars": "other"}, {"cars":  "bmw"}],
+    "other2": {
+      "cars": ["mazda", "bmw"]
+    },
+    "other3": {
+      "cars": "bmw"
+    }
+  },
+  {
+    "name":"Mark",
+    "city":"Oslo",
+    "age": 10,
+    "cars":[
+      "VW",
+      "Toyata"
+    ],
+    "job":"Doctor",
+    "other": {
+      "cars": ["ee", "ww", "Toyata", "bmw"]
+    }
+  }
+]
