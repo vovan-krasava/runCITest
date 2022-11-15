@@ -33,26 +33,19 @@ jobs:
           uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
           with:
             arguments: runTest
-            
-        - name: Test Summary
-          uses: test-summary/action@v2
-          with:
-            paths: "build/test-results/runTest/TEST-*.xml"
-            output: 'test-summary.md'
-          if: always()
           
         - name: Upload artifact
           uses: actions/upload-artifact@v3
           with:
-            name: test-result
-            path: ${{ github.workspace }}
+            name: artifacts
+            path: "build/test-results/runTest/TEST-*.xml"
             if-no-files-found: error
           if: success()
           
         - name: Create test summary
           uses: test-summary/action@dist
           with:
-            path: "build/test-results/runTest/TEST-*.xml"
+            paths: "build/test-results/runTest/TEST-*.xml"
           if: always()
           
   publish-test-results:
