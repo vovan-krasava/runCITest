@@ -46,21 +46,12 @@ jobs:
           uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
           with:
             arguments: runTest
-        - name: create test summary and md
-          uses: test-summary/action@dist
+        - name: Publish Test Report
+          uses: mikepenz/action-junit-report@v3
+          if: always() # always run even if the previous step fails
           with:
-            paths: "test/results/**/TEST-*.xml"
-            output: "test-summary.md"
-        - name: Create test summary
-          uses: test-summary/action@dist
-          with:
-            paths: "test/results/**/TEST-*.xml"
-          if: always()
-        - name: Upload test summary
-          uses: actions/upload-artifact@v3
-          with:
-            name: test-summary.md
-            path: test-summary.md
-          if: always()
+            report_paths: '**/build/test-results/test/TEST-*.xml'
+            detailed_summary: true
+
 
 
