@@ -31,7 +31,7 @@ jobs:
       with:
         arguments: build
 
-  run-test:
+  build-and-test:
       name: func test
       needs: build
       runs-on: ubuntu-latest
@@ -49,44 +49,46 @@ jobs:
         - name: Test Summary
           uses: test-summary/action@v2
           with:
-            paths: '**/build/reports/tests/runTest/**/TEST-*.xml'
+            paths: "**/build/test-results/runTest/**/TEST-*.xml"
             output: 'test-summary.md'
           if: always()
+          
         - name: Upload test summary
           uses: actions/upload-artifact@v3
           with:
-            name: test-summary.md
-            path: test-summary.md
+            name: test-result.xml
+            path: test-result.xml
           if: always()
+          
         - name: Create test summary
           uses: test-summary/action@dist
           with:
-            paths: '**/build/reports/tests/runTest/**/TEST-*.xml'
+            paths: "**/build/test-results/runTest/**/TEST-*.xml"
           if: always()
-  test-alternate-results-path:
-    needs: run-test
-    runs-on: ubuntu-18.04
-    name: Report is generated in alternate xml results path.
-    env:
-      RESULTS_PATH: "build/reports/tests/runTest"
+  publish-test-results:
+    name: "Publish Tests Results"
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+
+      # only needed unless run with comment_mode: off
+      pull-requests: write
+      
+    if: always()
+
     steps:
-      - uses: actions/checkout@v1
-      - name: Generate Report
-        id: xunit-viewer
-        uses: ./  #use the current project relative to root
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
         with:
-          results: ${{ env.RESULTS_PATH }}
-      - name: The generated report
-        run: echo "The report is ${{ steps.xunit-viewer.outputs.report-file }}"    
-      - name: Test
-        run: |
-            [ ${{ steps.xunit-viewer.outputs.report-file }} == "${{ env.RESULTS_PATH }}/index.html" ]
-      - name: Attach the report
-        if: always()
-        uses: actions/upload-artifact@v1
+          path: artifacts
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          name: alternate-results-path-reports
-          path: ${{ steps.xunit-viewer.outputs.report-dir }}
+          junit_files: "artifacts/**/*.xml"
+            
+
 
 
 
