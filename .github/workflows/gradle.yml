@@ -47,7 +47,7 @@ jobs:
           with:
             arguments: runTest
         - name: create test summary and md
-          uses: test-summary/action@dst
+          uses: test-summary/action@dist
           with:
             paths: "test/results/**/TEST-*.xml"
             output: "test-summary.md"
