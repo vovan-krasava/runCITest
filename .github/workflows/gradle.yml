@@ -64,6 +64,7 @@ jobs:
             paths: '**/build/reports/tests/runTest/**/TEST-*.xml'
           if: always()
   test:
+    needs: run-test
     runs-on: ubuntu-18.04
     name: Generate Test Reports
     env:
