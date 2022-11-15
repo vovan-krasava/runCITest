@@ -73,4 +73,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          junit_files: "./**/TEST-*.xml"
+          junit_files: "./artifact/TEST-*.xml"
