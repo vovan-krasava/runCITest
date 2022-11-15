@@ -43,9 +43,9 @@ jobs:
           uses: actions/upload-artifact@v3
           with:
             name: test-result.xml
-            paths: test-result.xml
+            path: ${{ github.workspace }}
             if-no-files-found: error
-          if: always()
+          if: passed()
           
         - name: Create test summary
           uses: test-summary/action@dist
